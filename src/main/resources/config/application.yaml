@@ -21,10 +21,10 @@ spring:
       server:
         native:
           search-locations: file:///C:/test/config
+    bus:
+      enabled: true
+      refresh:
+        enabled: true
   kafka:
-    bootstrap-servers:
-      - localhost:9092
-    consumer:
-      group-id: config-server
-      auto-offset-reset: earliest
+    bootstrap-servers: 172.31.207.39:9092
     client-id: config-server
