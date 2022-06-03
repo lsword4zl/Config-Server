@@ -1,10 +1,16 @@
 server:
   port: 18888
+  undertow:
+    accesslog:
+      enabled: true
+      dir: logs/accesslog
+      prefix: ${spring.application.name}-accesslog-%d{yyyy-MM-dd}
+      suffix: .log
 management:
   endpoints:
     web:
       exposure:
-        include: '*'
+        include: "*"
   endpoint:
     shutdown:
       enabled: true
@@ -27,4 +33,17 @@ spring:
         enabled: true
   kafka:
     bootstrap-servers: 172.31.207.39:9092
-    client-id: config-server
+    client-id: ${spring.application.name}
+
+logging:
+  file:
+    name: logs/${spring.application.name}.log
+  pattern:
+    file: "[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] [%thread] | %-5level| %logger{25} -- %msg%n"
+    console: "|%d{yyyy-MM-dd HH:mm:ss}:%-3relative| [%thread] | %-5level| %logger{25} -- %msg%n"
+  logback:
+    rollingpolicy:
+      file-name-pattern: logs/%d{yyyy,aux}/${spring.application.name}-%d{yyyy-MM-dd}-%i.log.gz
+      max-history: 90
+      max-file-size: 100MB
+  level: TRACE
